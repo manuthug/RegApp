@@ -4,7 +4,7 @@ pipeline{
 
     stages{
 
-        stage('sonar quality status'){
+        stage('sonar quality check'){
 
             agent{
 
@@ -18,7 +18,7 @@ pipeline{
 
                     withSonarQubeEnv(credentialsId: 'sonar-token') {
 
-                        sh 'maven clean package sonar:sonar'
+                        sh 'mvn clean package sonar:sonar'
     
                     }
                 }
