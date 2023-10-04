@@ -1,27 +1,28 @@
-pipeline{
-    
-    agent any
-
-    stages{
-
-        stage('sonar quality check'){
-
-            agent{
-
-                docker{
-                    image 'maven'
-                }
+pipeline {
+    agent {label 'Jenkins-Node' }
+    tools {
+        jdk 'java17'
+        maven 'Maven3'
+    }
+    stages {
+        stage("Cleanup Workspace"){
+            steps {
+                cleanWs()
             }
+        }
+        stage("Checkout from SCM"){
             steps{
-
-                script{
-
-                    withSonarQubeEnv(credentialsId: 'sonar-token') {
-
-                        sh 'mvn clean package sonar:sonar'
-    
-                    }
-                }
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/manuthug/RegApp'
+            }
+        }
+        stage("Build Application"){
+            steps{
+                sh 'mvn clean package'
+            }
+        }
+        stage("Test Application"){
+            steps{
+                sh 'mvn test'
             }
         }
     }
