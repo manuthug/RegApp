@@ -5,7 +5,7 @@ pipeline {
         maven 'Maven3'
     }
     environment{
-        APP_NAME = "RegApp-pipeline"
+        APP_NAME = "regapp-pipeline"
         RELEASE  = "1.0.0"
         DOCKER_USER = "manuthug"
         DOCKER_PASS = 'dockerhub'
